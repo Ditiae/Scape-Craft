@@ -128,7 +128,7 @@ public class EntityTutGuide extends EntityMob
 	
     public String getEntityName()
     {
-      return "ShopKeeper";
+      return "Tutorial Guide";
     }
     
     protected void entityInit()
