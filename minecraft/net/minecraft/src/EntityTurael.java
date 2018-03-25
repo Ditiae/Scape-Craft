@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.network.FMLNetworkHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
@@ -34,6 +36,7 @@ public class EntityTurael extends EntityMob implements INpc {
 		super(par1World);
 		this.addRandomArmor();
 		this.moveSpeed = 0.0F;
+		this.setAlwaysRenderNameTag(true);
 		this.entityCollisionReduction = 50;
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityBlackKnight.class, 0, false));
 		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityBlackKnight.class, this.moveSpeed, false));
@@ -130,7 +133,7 @@ public class EntityTurael extends EntityMob implements INpc {
 	}
 
 	public boolean isAIEnabled() {
-		return true;
+		return false;
 	}
 
 	/**
@@ -164,12 +167,21 @@ public class EntityTurael extends EntityMob implements INpc {
 		this.worldObj.playSoundAtEntity(this, "mob.villager.default", 0.15F, 1.0F);
 	}
 
-	@SideOnly(Side.CLIENT)
-	public boolean interact(EntityPlayer par1EntityPlayer) {
+	public boolean interact(EntityPlayer player) {
 		if (!worldObj.isRemote) {
-			//
+			super.interact(player);
+			int x = (int) this.posX;
+			int y = (int) this.posY;
+			int z = (int) this.posZ;
+			if (player instanceof EntityPlayer) {
+				ModLoader.getMinecraftInstance().thePlayer.openGui(GuiHandler.class, GuiTurael.GUIID, worldObj, x, y,
+						z);
+				// FMLNetworkHandler.openGui(player, mod_phat.class, GuiTurael.GUIID, worldObj,
+				// x, y, z);
+				// player.openGui(mod_phat.class, GuiTurael.GUIID, worldObj, x, y, z);
+			}
 		}
-		return super.interact(par1EntityPlayer);
+		return super.interact(player);
 	}
 
 	protected void addRandomArmor() {
@@ -185,23 +197,34 @@ public class EntityTurael extends EntityMob implements INpc {
 		this.equipmentDropChances[3] = 0.0F;
 		this.equipmentDropChances[4] = 0.0F;
 	}
-	
+
+	public void onLivingUpdate() {
+		double x = this.posX;
+		double y = this.posY;
+		double z = this.posZ;
+		if (ticksExisted > 10 * 20) {
+			setDead();
+		}
+	}
+
 	@Override
 	protected boolean canDespawn() {
 		return false;
 	}
+
 	@Override
 	public boolean isEntityInvulnerable() {
 		return true;
 	}
+
 	@Override
 	final public boolean canBePushed() {
 		return false;
 	}
-	@Override
-	public boolean canBeCollidedWith() {
-		return false;
+
+	public void collideWithEntity() {
 	}
-	public void collideWithEntity() { }
-	public void collideWithNearbyEntities() { }
+
+	public void collideWithNearbyEntities() {
+	}
 }
