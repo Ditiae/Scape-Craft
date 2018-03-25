@@ -148,7 +148,7 @@ RenderingRegistry.instance().registerEntityRenderingHandler(EntityCook.class, ne
 RenderingRegistry.instance().registerEntityRenderingHandler(EntityChristmasGuard.class, new RenderChristmasGuard(new ModelBiped(), 0.5F));
 RenderingRegistry.instance().registerEntityRenderingHandler(EntityCbot.class, new RenderCbot(new ModelBiped(), 0.5F));
 RenderingRegistry.instance().registerEntityRenderingHandler(EntityTutGuide.class, new RenderTutGuide(new ModelBiped(), 0.5F));
-
+RenderingRegistry.instance().registerEntityRenderingHandler(EntityTurael.class, new RenderTurael(new ModelBiped(), 0.5F));
 RenderingRegistry.instance().registerEntityRenderingHandler(EntityGeneralGraardor.class, new RenderGeneralGraardor(new ModelGeneralGraardor(), 0.5F));
 RenderingRegistry.instance().registerEntityRenderingHandler(EntitySergeantGrimspike.class, new RenderSergeantGrimspike(new ModelSergeantGrimSpike(), 0.5F));
 RenderingRegistry.instance().registerEntityRenderingHandler(EntitySergeantSteelwill.class, new RenderSergeantSteelwill(new ModelSergeantSteelWill(), 0.5F));
